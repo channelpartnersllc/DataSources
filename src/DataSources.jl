@@ -114,10 +114,6 @@ function allfundedcontracts(max_date::Date; min_date::Date = Date(1900))
 end # function
 
 
-#=
-    TODO: This needs to be updated with one more temp table
-    after Drew ports the static mod effective date into the source
-=#
 # This function doesn't take an argument since the modification period has ended.
 function covidmods()
     out::DataFrame = sql(
