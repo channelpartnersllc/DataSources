@@ -192,7 +192,7 @@ end # function
 function industries()
     out::DataFrame = sql(
         """
-        select lms.contract_id, coalesce(ict.Description, 'Unknown') as industry
+        select opp.id as opportunity_id, lms.contract_id, coalesce(ict.Description, 'Unknown') as industry
         from Opportunity as opp
         inner join opportunity_contract as oc on oc.opportunity_id = opp.id
         inner join opportunity_contract_lms as lms on lms.contract_oid = oc.aspire_id
