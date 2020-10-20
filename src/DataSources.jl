@@ -127,12 +127,12 @@ function covidmods()
         drop table if exists #events;
 
         select distinct contract_id, case
-        	when reason like 'Covid-19 Relief Addendum' and
-        		post_date >= '2020-03-24' then 1
-        	when reason like 'BA Reconciliation' and
-        		post_date >= '2020-03-24' and
-        		post_date < '2020-07-20' then 1
-        	else 0
+            when reason like 'Covid-19 Relief Addendum' and
+                post_date >= '2020-03-24' then 1
+            when reason like 'BA Reconciliation' and
+                post_date >= '2020-03-24' and
+                post_date < '2020-07-20' then 1
+            else 0
         end as is_covid_modded
         into #events
         from Report_Aspire_Contract_Modification as cm;
@@ -152,8 +152,9 @@ function covidmods()
         left join Report_Aspire_Contract_Modification as cm on cm.Contract_Id = mc.Contract_Id
         group by mc.Contract_Id
 
-        select *
-        from #mod_dates
+        select md.*, convert(datetime, sam.mod_effective_date) as mod_effective_date, convert(datetime, sam.subsequent_effective_date) as sub_effective_date
+        from #mod_dates as md
+        left join dbo.StaticAccountMod as sam on sam.contract_id = md.Contract_Id
         """
     )
 
