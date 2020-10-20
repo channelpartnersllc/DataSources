@@ -1,0 +1,10 @@
+name = "DataSources"
+uuid = "21013f52-9b4a-4f89-8699-1090e9f91d4a"
+authors = ["Derek.Vetsch "]
+version = "0.1.0"
+
+[deps]
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
+VetschLib = "ea63151f-c36a-4fe5-a26a-7cd9cf30081c"
