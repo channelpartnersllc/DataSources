@@ -146,7 +146,7 @@ function covidmods()
         into #mod_dates
         from #mod_contracts as mc
         left join Report_Aspire_Contract_Modification as cm on cm.Contract_Id = mc.Contract_Id
-        group by mc.Contract_Id
+        group by mc.Contract_Id;
 
         select md.*, convert(datetime, sam.mod_effective_date) as mod_effective_date, convert(datetime, sam.subsequent_effective_date) as sub_effective_date
         from #mod_dates as md
