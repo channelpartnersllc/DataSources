@@ -156,9 +156,9 @@ function covidmods()
 
     transform!(
         out,
-        :mod_post_date => ByRow(
+        names(out, r"date") .=> ByRow(
             x -> ismissing(x) ? missing : Date(x)
-        ) => :mod_post_date
+        ) .=> names(out, r"date")
     )
 
     return out
