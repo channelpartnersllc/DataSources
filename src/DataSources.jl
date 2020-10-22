@@ -204,5 +204,50 @@ function industries()
     return out
 end
 
+function trialbalance(max_date::Date; min_date::Date = Date(1900))
+    tmp::DataFrame = sql(
+    """
+    select contract_id, balance, convert(datetime, posting_date) as post_date
+    from report_aspire_trial_balance
+    where contract_id is not null and
+        posting_date <= '$max_date' and
+        posting_date >= '$min_date'
+    """
+    )
+
+    tmp.post_date = map(tmp.post_date) do x
+        Date(x)
+    end
+
+    set_min_date::Date = min_date == Date(1900) ? minimum(tmp.post_date) : min_date
+
+    out::DataFrame = DataFrame(
+        :pull_date => Array{Date}(undef, 1),
+        :contract_id => Array{String}(undef, 1),
+        :balance => Array{Number}(undef, 1)
+    )
+
+    @inbounds for dt in set_min_date:Day(1):max_date
+        h::DataFrame = filter(
+            r -> r.post_date <= dt,
+            tmp
+        )
+        h = combine(
+            groupby(h, :contract_id),
+            :post_date => maximum => :pull_date
+        )
+        h = innerjoin(
+            h,
+            tmp,
+            on = [:contract_id => :contract_id, :pull_date => :post_date]
+        )
+        append!(out, h)
+    end
+
+    out = out[2:end, :] # removing the undef first row
+
+    return out
+
+end # function
 
 end # module
