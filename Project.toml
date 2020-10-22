@@ -1,7 +1,7 @@
 name = "DataSources"
 uuid = "21013f52-9b4a-4f89-8699-1090e9f91d4a"
 authors = ["Derek.Vetsch "]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
